@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Algorithm Details &mdash; PhyloRelief 1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PhyloRelief 1.2 documentation" href="index.html" />
+    <link rel="prev" title="Example" href="example.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="example.html" title="Example"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="algorithm-details">
+<h1>Algorithm Details<a class="headerlink" href="#algorithm-details" title="Permalink to this headline">¶</a></h1>
+<div class="figure">
+<img alt="_images/algorithm.png" src="_images/algorithm.png" />
+<p class="caption">a) Preliminary analysis. From the sequences of the marker
+genomic loci selected by the experimental design, an OTU table
+and a phylogenetic tree of the representative sequences of the
+OTUs is computed. b) Next, the matrix of the distances between
+the samples must be computed using a phylogenetic measure of
+β-diversity, such as weighted or unweighted UniFrac must be
+provided.; c) The PhyloRelief strategy. Once one sample S has
+been randomly selected, the nearest hit <img class="math" src="_images/math/b1902d279ba37d60bdce4e0e987b7cd19d48974e.png" alt="H"/>, i.e. the
+nearest sample of the same class, and the nearest miss
+<img class="math" src="_images/math/5d1e4485dc90c450e8c76826516c1b2ccb8fce16.png" alt="M"/>, i.e. the nearest sample of different class according
+to distance matrix <img class="math" src="_images/math/88dcda60d0d70a536ded695000be9d5f0cf7ff38.png" alt="D^S"/> are identified. d) The update
+function. For each branch <img class="math" src="_images/math/522e993eb314346e5a4bffbff12cf0dddf85f1f8.png" alt="T_i"/> the weight <img class="math" src="_images/math/d1495f541043eadabea18b4ebf00dc2fb98f31ee.png" alt="W[T_i]"/>
+is updated by summing the value <img class="math" src="_images/math/96862831141ab6195091d9d5f06e5c316c2f83bf.png" alt="d(T_i,S,H)/m"/> and
+subtracting <img class="math" src="_images/math/1cd359f1bd404c9dfc818d091c7ab437a6b75f1c.png" alt="d(T_i,S,M)/m"/>. The function
+<img class="math" src="_images/math/346873cd91f0fd215fe410a747fc6e89e072c5eb.png" alt="d(T_i,A,B)"/> is computed by summing the UniFrac distance
+between the sample A and B restricted to the subtree
+<img class="math" src="_images/math/522e993eb314346e5a4bffbff12cf0dddf85f1f8.png" alt="T_i"/>. e) Correlation of the weights and definition of the
+clades. The weights of the each clades propagate to the parents,
+where it is either reinforced if coalescing with a clade sharing
+similar unbalance between the classes, or is diluted if
+coalescing with a clade with no or contrasting unbalance. This
+allows an iterative procedure leading to the the unambiguous
+identification of a set of uncorrelated clades. f) Output. The
+algorithm provides a list of clades of the phylogenetic tree
+ranked according to their contribution to the separation of the
+classes of samples.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="example.html"
+                        title="previous chapter">Example</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="example.html" title="Example"
+             >previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Davide Albanese, Claudio Donati.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

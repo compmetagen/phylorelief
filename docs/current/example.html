@@ -1,0 +1,165 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Example &mdash; PhyloRelief 1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PhyloRelief 1.2 documentation" href="index.html" />
+    <link rel="next" title="Algorithm Details" href="details.html" />
+    <link rel="prev" title="Usage" href="usage.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="details.html" title="Algorithm Details"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="example">
+<h1>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h1>
+<p>This very simple example is located in the <tt class="docutils literal"><span class="pre">example/</span></tt> directory. The directory contains three files. A rooted tree in newick format:</p>
+<div class="highlight-python"><pre>(((OTU1:0.1, OTU2:0.1):0.1,(OTU3:0.1, OTU4:0.1):0.1):0.1,((OTU5:0.1, OTU6:0.1):0.1,(OTU7:0.1,OTU8:0.1):0.1):0.1):0.1</pre>
+</div>
+<img alt="_images/input_tree_example.png" src="_images/input_tree_example.png" />
+<p>An OTU table in tab-delimited format:</p>
+<div class="highlight-python"><pre>OTU	SAMPLE1	SAMPLE2	SAMPLE3	SAMPLE4OTU1	1	1	2	1OTU2	1	2	1	1OTU3	1	1	2	2OTU4	1	1	2	2OTU5	0	0	3	0OTU6	0	0	1	4OTU7	3	3	0	0OTU8	3	3	0	0</pre>
+</div>
+<p>A sample table with sample information:</p>
+<div class="highlight-python"><pre>Sample	Status
+SAMPLE4	Control
+SAMPLE1	Case
+SAMPLE3	Control
+SAMPLE2	Case
+</pre>
+</div>
+<p>To to run example, open a terminal, go into the example (examples/) folder and run:</p>
+<div class="highlight-python"><pre>$ phylorelief otu_table.txt tree.tre sample_data.txt Status -k 1</pre>
+</div>
+<p>Two files, <tt class="docutils literal"><span class="pre">out_phylorelief.txt</span></tt> and <tt class="docutils literal"><span class="pre">tree_phylorelief.tre</span></tt> will be generated.
+<tt class="docutils literal"><span class="pre">out_phylorelief.txt</span></tt> contains the clade/OTU ranking:</p>
+<div class="highlight-python"><pre>phylorelief_weight	kw_stats	kw_p	kw_padj	OTUs
+0.9762	3.0000	0.0833	0.1388	OTU7,OTU8
+0.7976	3.0000	0.0833	0.1388	OTU5,OTU6
+0.2961	3.0000	0.0833	0.1388	OTU3,OTU4
+0.0703	1.0000	0.3173	0.3173	OTU2
+0.0096	1.0000	0.3173	0.3173	OTU1
+</pre>
+</div>
+<p><tt class="docutils literal"><span class="pre">tree_phylorelief.tre</span></tt> is the nexus annotated file:</p>
+<div class="highlight-python"><pre>#NEXUS
+
+
+
+BEGIN TAXA;
+
+    DIMENSIONS NTAX=8;
+    TAXLABELS
+        OTU1 
+        OTU2 
+        OTU3 
+        OTU4 
+        OTU5 
+        OTU6 
+        OTU7 
+        OTU8 
+  ;
+END;
+
+BEGIN TREES;
+
+    TREE 0 = [&amp;R] (((OTU1:0.1[&amp;phylorelief_weight=0.00960061443932,phylorelief_rank=5,kw_stat=1.0,kw_p=0.317310507863,kw_padj=0.317310507863],OTU2:0.1[&amp;phylorelief_weight=0.0702764976959,phylorelief_rank=4,kw_stat=1.0,kw_p=0.317310507863,kw_padj=0.317310507863]):0.1[&amp;phylorelief_weight=-0.0464743589744,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],(OTU3:0.1[&amp;phylorelief_weight=0.296130952381,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU4:0.1[&amp;phylorelief_weight=0.296130952381,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&amp;phylorelief_weight=0.296130952381,phylorelief_rank=3,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439]):0.1[&amp;phylorelief_weight=0.133609061135,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],((OTU5:0.1[&amp;phylorelief_weight=0.0,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU6:0.1[&amp;phylorelief_weight=0.685185185185,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&amp;phylorelief_weight=0.797619047619,phylorelief_rank=2,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439],(OTU7:0.1[&amp;phylorelief_weight=0.97619047619,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU8:0.1[&amp;phylorelief_weight=0.97619047619,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&amp;phylorelief_weight=0.97619047619,phylorelief_rank=1,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439]):0.1[&amp;phylorelief_weight=0.562820512821,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&amp;phylorelief_weight=0.260795454545,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0];
+
+END;
+
+</pre>
+</div>
+<p>Now you can navigate the annotated tree with an external progam such as FigTree:</p>
+<img alt="_images/figtree_example.png" src="_images/figtree_example.png" />
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="previous chapter">Usage</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="details.html"
+                        title="next chapter">Algorithm Details</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="details.html" title="Algorithm Details"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Davide Albanese, Claudio Donati.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

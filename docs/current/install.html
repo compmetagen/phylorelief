@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; PhyloRelief 1.2 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="PhyloRelief 1.2 documentation" href="index.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Welcome to PhyloRelief’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PhyloRelief’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="requirements">
+<h2>Requirements<a class="headerlink" href="#requirements" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><ul class="simple">
+<li>Linux or OSX systems</li>
+<li>Python &gt;= 2.7</li>
+<li>NumPy and SciPy (<a class="reference external" href="http://scipy.org">http://scipy.org</a>)</li>
+<li>Pandas (<a class="reference external" href="http://pandas.pydata.org">http://pandas.pydata.org</a></li>
+<li>DendroPy (<a class="reference external" href="http://pythonhosted.org/DendroPy/">http://pythonhosted.org/DendroPy/</a>)</li>
+<li>Statsmodels (<a class="reference external" href="http://statsmodels.sourceforge.net/">http://statsmodels.sourceforge.net/</a>)</li>
+</ul>
+</div></blockquote>
+<dl class="docutils">
+<dt>On Linux</dt>
+<dd><p class="first">Required Python modules can easily installed by running the package
+manager or using <tt class="docutils literal"><span class="pre">easy_install</span></tt>:</p>
+<div class="last highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>sudo easy_install numpy scipy pandas dendropy statsmodels
+</pre></div>
+</div>
+</dd>
+<dt>On OSX</dt>
+<dd><ol class="first last arabic">
+<li><p class="first">Install the gfortran compiler from
+<a class="reference external" href="http://cran.r-project.org/bin/macosx/tools/">http://cran.r-project.org/bin/macosx/tools/</a> (required by SciPy)</p>
+</li>
+<li><p class="first">Install the Python modules by running <tt class="docutils literal"><span class="pre">easy_install</span></tt>:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>sudo easy_install numpy scipy pandas dendropy
+</pre></div>
+</div>
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+<div class="section" id="installing-phylorelief">
+<h2>Installing PhyloRelief<a class="headerlink" href="#installing-phylorelief" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Untar <tt class="docutils literal"><span class="pre">phylorelief-X.Y.Z.tar.gz</span></tt>, creating <tt class="docutils literal"><span class="pre">phylorelief-X.Y.Z</span></tt> folder (where
+<tt class="docutils literal"><span class="pre">X.Y.Z</span></tt> is the current version of phylorelief)</p>
+</li>
+<li><p class="first">Go into <tt class="docutils literal"><span class="pre">phylorelief-X.Y.Z</span></tt> folder and from a terminal run:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>sudo python setup.py install
+</pre></div>
+</div>
+</li>
+<li><p class="first">If you don&#8217;t have root access, installing phylorelief in a directory by
+specifying the <tt class="docutils literal"><span class="pre">--prefix</span></tt> argument. Then you need to set tht
+<tt class="docutils literal"><span class="pre">PYTHONPATH</span></tt> environment variable:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span class="nv">$ </span>python setup.py install --prefix<span class="o">=</span>/path/to/modules
+<span class="nv">$ </span><span class="nb">export </span><span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$PYTHONPATH</span>:/path/to/modules/lib/python<span class="o">{</span>version<span class="o">}</span>/site-packages
+</pre></div>
+</div>
+</li>
+<li><p class="first">Test the installation:</p>
+<div class="highlight-text"><div class="highlight"><pre>$ phylorelief
+usage: phylorelief otu_table tree sample_data target [options]
+phylorelief: error: too few arguments
+...
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#requirements">Requirements</a></li>
+<li><a class="reference internal" href="#installing-phylorelief">Installing PhyloRelief</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to PhyloRelief&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="usage.html"
+                        title="next chapter">Usage</a></p>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="usage.html" title="Usage"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to PhyloRelief’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">PhyloRelief 1.2 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Davide Albanese, Claudio Donati.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
