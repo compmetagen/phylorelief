@@ -1,0 +1,25 @@
+#NEXUS
+
+
+
+BEGIN TAXA;
+
+    DIMENSIONS NTAX=8;
+    TAXLABELS
+        OTU1 
+        OTU2 
+        OTU3 
+        OTU4 
+        OTU5 
+        OTU6 
+        OTU7 
+        OTU8 
+  ;
+END;
+
+BEGIN TREES;
+
+    TREE 0 = [&R] (((OTU1:0.1[&phylorelief_weight=0.00960061443932,phylorelief_rank=5,kw_stat=1.0,kw_p=0.317310507863,kw_padj=0.317310507863],OTU2:0.1[&phylorelief_weight=0.0702764976959,phylorelief_rank=4,kw_stat=1.0,kw_p=0.317310507863,kw_padj=0.317310507863]):0.1[&phylorelief_weight=-0.0464743589744,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],(OTU3:0.1[&phylorelief_weight=0.296130952381,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU4:0.1[&phylorelief_weight=0.296130952381,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&phylorelief_weight=0.296130952381,phylorelief_rank=3,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439]):0.1[&phylorelief_weight=0.133609061135,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],((OTU5:0.1[&phylorelief_weight=0.0,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU6:0.1[&phylorelief_weight=0.685185185185,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&phylorelief_weight=0.797619047619,phylorelief_rank=2,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439],(OTU7:0.1[&phylorelief_weight=0.97619047619,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0],OTU8:0.1[&phylorelief_weight=0.97619047619,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&phylorelief_weight=0.97619047619,phylorelief_rank=1,kw_stat=3.0,kw_p=0.0832645166636,kw_padj=0.138774194439]):0.1[&phylorelief_weight=0.562820512821,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0]):0.1[&phylorelief_weight=0.260795454545,phylorelief_rank=15,kw_stat=0.0,kw_p=1.0,kw_padj=1.0];
+
+END;
+

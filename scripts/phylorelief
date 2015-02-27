@@ -1,0 +1,124 @@
+#! /usr/bin/env python
+
+## This code is written by Davide Albanese, <davide.albanese@fmach.it> 
+## <davide.albanese@gmail.com>
+## Copyright (C) 2013 Fondazione Edmund Mach
+## Copyright (C) 2013 Davide Albanese
+
+## This program is free software: you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation, either version 3 of the License, or
+## (at your option) any later version.
+
+## This program is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
+
+## You should have received a copy of the GNU General Public License
+## along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+from __future__ import division
+import sys
+import argparse
+import csv
+import dendropy
+import numpy as np
+import pandas as pd
+from phylorelief import prelief, import_data, __version__
+
+
+usage = """%(prog)s otu_table tree sample_data target [options]
+"""
+
+description = """PhyloRelief v%s. Phylogenetic-based Relief for clade weighting
+and OTU ranking.
+""" % __version__
+
+epilog = """Example:
+
+    $ phylorelief otu_table.txt tree.tre sample_data.txt Status -k 1
+
+Authors:
+    Davide Albanese <davide.albanese@fmach.it>
+    Claudio Donati <claudio.donati@fmach.it>
+
+Fondazione Edmund Mach, 2013
+"""
+
+parser = argparse.ArgumentParser(
+    usage=usage, description=description,
+    formatter_class=argparse.RawDescriptionHelpFormatter,
+    version=__version__, epilog=epilog)
+parser.add_argument('otu_table',
+                    help="an OTU table file (containing the number of "
+                    "sequences observed in each OTU for each sample) in "
+                    "tab-delimited format")
+parser.add_argument('tree',
+                    help="a (rooted) tree in 'newick' or  'nexus' "
+                    "format (see --tree-format option). Note that "
+                    "all the leaf nodes should have univocal names")
+parser.add_argument('sample_data',
+                    help="a tab-delimited file containing sample information "
+                    "and metadata")
+parser.add_argument('target', 
+                    help="sample data column to be used as class label")
+parser.add_argument('-f', '--tree-format', help="tree format "
+                    "(default %(default)s)", choices=["newick", "nexus"],
+                    default="newick")
+parser.add_argument('-u', '--uf-variant', help="unifrac variant "
+                    "(default %(default)s)",
+                    choices=["unweighted", "weighted", "generalized"],
+                    default="weighted")
+parser.add_argument('-k', '--n-nearest-neighbors', help="number of nearest neighbors "
+                    "(default %(default)s)", default=2, type=int)
+parser.add_argument('-a', '--alpha', help="alpha for generalized unifrac "
+                     "(default %(default)s)", default=0.5, type=float)
+parser.add_argument('-i', '--n-iterations', help="number of iterations "
+                     "(default number of samples)", default=None, type=int)
+parser.add_argument('-o', '--out', help="clade ranking output file "
+                    "(default %(default)s)", default="out_phylorelief.txt")
+parser.add_argument('-t', '--tree_out', help="annotated tree (BEAST/FigTree "
+                    "style) in nexus format (default %(default)s)", 
+                    default="tree_phylorelief.tre")
+
+args = parser.parse_args()
+
+otu_table, tree, sample_data = import_data(args.otu_table, args.tree, args.sample_data)
+    
+try:
+    target = sample_data[args.target]
+except KeyError:
+    sys.stderr.write("target %s is not in the sample table")
+    exit(1)
+
+# phylorelief
+weight, rank = prelief(otu_table, tree, target, k=args.n_nearest_neighbors, 
+                       m=args.n_iterations, equal_priors=True,
+                       seed=0, variant=args.uf_variant, alpha=args.alpha)
+
+# add tree annotations and write
+for node in tree.postorder_node_iter():
+    node.annotations.add_new(name='phylorelief_weight', value=weight[node.oid])
+    node.annotations.add_new(name='phylorelief_rank', value=weight.shape[0])
+    node.annotations.add_new(name='kw_stat', value=0.0)
+    node.annotations.add_new(name='kw_p', value=1.0)
+    node.annotations.add_new(name='kw_padj', value=1.0)
+for i, (node_oid, otus, kw_stat, kw_p, kw_padj) in enumerate(rank):
+    node = tree.find_node(lambda node: node.oid == node_oid)
+    node.annotations.find(name="phylorelief_rank").value = i+1
+    node.annotations.find(name="kw_stat").value = kw_stat
+    node.annotations.find(name="kw_p").value = kw_p
+    node.annotations.find(name="kw_padj").value = kw_padj
+tree.write_to_path(args.tree_out, schema="nexus")
+
+# write the output file
+out_phylorelief_handle = open(args.out, "w")
+out_phylorelief_writer = csv.writer(out_phylorelief_handle, delimiter='\t',
+                                    lineterminator='\n')
+out_phylorelief_writer.writerow(["phylorelief_weight", "kw_stats", "kw_p", "kw_padj", "OTUs"])
+for node_oid, otus, kw_stats, kw_p, kw_padj in rank:
+    out_phylorelief_writer.writerow(["%.4f" % weight[node_oid], "%.4f" % kw_stats, 
+                                     "%.4f" % kw_p, "%.4f" % kw_padj, ','.join(otus)])
+out_phylorelief_handle.close()

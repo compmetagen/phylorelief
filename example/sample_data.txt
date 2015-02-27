@@ -1,0 +1,5 @@
+Sample	Status
+SAMPLE4	Control
+SAMPLE1	Case
+SAMPLE3	Control
+SAMPLE2	Case

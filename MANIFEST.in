@@ -1,0 +1,12 @@
+include *.txt
+include *.rst
+include *.pdf
+include docs/Makefile
+include docs/*.py
+include docs/*.rst
+include docs/*.bat
+include docs/images/*
+include docs/_static/*
+include docs/_templates/*
+recursive-include docs/_build *
+recursive-include example *
